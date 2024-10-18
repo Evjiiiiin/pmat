@@ -1,1 +1,0 @@
-Invalid name: # intnInvalid name: n = 5nInvalid name: age = 18n

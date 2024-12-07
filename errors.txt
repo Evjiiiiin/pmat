@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/home/ubuntu/practice/./koren.py", line 5, in <module>
-    num = float(input())
-          ^^^^^^^^^^^^^^
-ValueError: could not convert string to float: 'Enter a number: A = 2'

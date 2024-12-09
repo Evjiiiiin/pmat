@@ -5,7 +5,7 @@ import math
 
 def main():
     try:
-        user_input = input("Введите число: ")
+        user_input = input()
         number = float(user_input)
         
         if number < 0:
@@ -15,7 +15,7 @@ def main():
         
         with open('output.txt', 'w') as file:
             file.write(f"{result}\n")
-    
+
     except ValueError as ve:
         sys.stderr.write(f"Ошибка: {str(ve)}\n")
     except Exception as ex:

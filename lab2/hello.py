@@ -1,45 +1,35 @@
 #!/usr/bin/python3
-import string
+
+import sys
 
 def is_valid_name(name):
-    return name[0].isupper() and name[1:].islower() and all(c in string.ascii_letters for c in name)
+    return name[0].isupper() and name.isalpha()
 
-def greet_user():
-    while True:
-        try:
-            name = input().strip()
+def greet_from_file():
+    error_log = open("error.txt", "w")
+    for line in sys.stdin:
+        name = line.strip()
+        if not name:
+            continue
+        if not is_valid_name(name):
+            error_log.write(f"Ошибка: Имя '{name}' должно начинаться с заглавной буквы и содержать только буквы!\n")
+        else:
+            print(f"Приятно видеть тебя, {name}!")
+    error_log.close()
+
+def greet_interactive():
+    try:
+        while True:
+            name = input("Привет, как тебя зовут? ").strip()
             if is_valid_name(name):
-                print(f"Привет, {name}!")
+                print(f"Приятно видеть тебя, {name}!")
             else:
                 print(f"Неверное имя: {name}. Оно должно начинаться с заглавной буквы и содержать только буквы.")
-        except KeyboardInterrupt:
-            print("\nДо свидания!")
-            break
-
-def greet_names_from_file(filename):
-    try:
-        with open(filename, 'r', encoding='utf-8') as file:
-            for name in file:
-                name = name.strip()
-                if is_valid_name(name):
-                    print(f"Привет, {name}!")
-                else:
-                    print(f"Неверное имя: {name}. Оно должно начинаться с заглавной буквы и содержать только буквы.")
-    except FileNotFoundError:
-        print(f"Файл {filename} не найден.")
-    except Exception as e:
-        print(f"Произошла ошибка: {e}")
-
-def main():
-    choice = input().strip()
-    
-    def switch(case):
-        return {
-            '1': greet_user,
-            '2': lambda: greet_names_from_file('name.txt')
-        }.get(case, lambda: print("Неверный выбор. Пожалуйста, выберите 1 или 2."))()
-
-    switch(choice)
+    except KeyboardInterrupt:
+        print("\nДо свидания!")
 
 if __name__ == "__main__":
-    main()
+    if sys.stdin.isatty():
+        greet_interactive()
+    else:
+        greet_from_file()

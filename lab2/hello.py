@@ -7,7 +7,7 @@ def is_valid_name(name):
 def greet_user():
     while True:
         try:
-            name = input("Пожалуйста, введите ваше имя: ").strip()
+            name = input().strip()
             if is_valid_name(name):
                 print(f"Привет, {name}!")
             else:
@@ -31,13 +31,15 @@ def greet_names_from_file(filename):
         print(f"Произошла ошибка: {e}")
 
 def main():
-    choice = input("Выберите 1 для приветствия или 2 для чтения имен из файла: ").strip()
-    if choice == '1':
-        greet_user()
-    elif choice == '2':
-        greet_names_from_file('name.txt')
-    else:
-        print("Неверный выбор. Пожалуйста, выберите 1 или 2.")
+    choice = input().strip()
+    
+    def switch(case):
+        return {
+            '1': greet_user,
+            '2': lambda: greet_names_from_file('name.txt')
+        }.get(case, lambda: print("Неверный выбор. Пожалуйста, выберите 1 или 2."))()
+
+    switch(choice)
 
 if __name__ == "__main__":
     main()

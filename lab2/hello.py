@@ -5,22 +5,22 @@ def is_valid_name(name):
     return name[0].isupper() and name[1:].islower() and all(c in string.ascii_letters for c in name)
 
 def greet_user():
-    try:
-        while True:
+    while True:
+        try:
             name = input("Пожалуйста, введите ваше имя: ").strip()
             if is_valid_name(name):
                 print(f"Привет, {name}!")
             else:
                 print(f"Неверное имя: {name}. Оно должно начинаться с заглавной буквы и содержать только буквы.")
-    except KeyboardInterrupt:
-        print("\nДо свидания!")
+        except KeyboardInterrupt:
+            print("\nДо свидания!")
+            break
 
 def greet_names_from_file(filename):
     try:
         with open(filename, 'r', encoding='utf-8') as file:
-            names = file.readlines()
-            for name in names:
-                name = name.strip()  # Удаляем пробелы и символы новой строки
+            for name in file:
+                name = name.strip()
                 if is_valid_name(name):
                     print(f"Привет, {name}!")
                 else:

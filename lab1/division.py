@@ -18,7 +18,8 @@ def main():
         result = A / B
         print(f"Результат деления: {result}")
     except ZeroDivisionError:
-        sys.stderr.write("Ошибка: деление на ноль.\n")
+        with open("error.txt", "a") as error_log:
+            error_log.write("Ошибка: деление на ноль.\n")
 
 if __name__ == "__main__":
     main()

@@ -33,9 +33,23 @@ class Database(metaclass=SingletonMeta):
         table = self.tables.get(table_name)
         return table.select(*args) if table else None
 
-    # TODO: Реализовать JOIN метод (перебор за O(N^2) сойдет)
-    def join(self, table1_name, table2_name, join_attr="id"):
-        pass
+    class Database(metaclass=SingletonMeta):
+        
+    def join(self, table1_name, table2_name, join_attr="id", join_attr2="department_id"):
+
+        table_1 = self.tables.get(table_1_name)
+        table_2 = self.tables.get(table_2_name)
+
+        if not table_1 or not table_2:
+            raise ValueError("First or both of tables are not exist.")
+
+        joined_data = []
+        for row_1 in table_1.data:
+            for row_2 in table_2.data:
+                if row_1[join_attr1] == row_2[join_attr2]:
+                    joined_data.append({**row_1, **row_2})
+
+        return joined_data
 
 
 class Table(ABC):

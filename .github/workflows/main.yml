@@ -14,7 +14,9 @@ jobs:
     - name: Install pre-commit
       run: |
         pip install pre-commit
-        pip install poetry
         pre-commit install
+        pip install poetry
+        cd tiny-database && poetry install --no-root
+        cd ..
     - name: Run pre-commit
       run: pre-commit run --all-files

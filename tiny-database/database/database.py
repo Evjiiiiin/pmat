@@ -1,6 +1,6 @@
-from abc import ABC, abstractmethod
 import csv
 import os
+from abc import ABC, abstractmethod
 
 
 class SingletonMeta(type):

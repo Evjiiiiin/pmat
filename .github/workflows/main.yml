@@ -14,6 +14,7 @@ jobs:
     - name: Install pre-commit
       run: |
         pip install pre-commit
+        pip install poetry
         pre-commit install
     - name: Run pre-commit
       run: pre-commit run --all-files

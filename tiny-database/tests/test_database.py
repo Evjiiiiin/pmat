@@ -1,14 +1,17 @@
-import pytest
 import os
 import tempfile
-from database.database import Database, EmployeeTable, DepartmentTable
+
+import pytest
+from database.database import Database, DepartmentTable, EmployeeTable
+
 
 @pytest.fixture
 def temp_employee_file():
-    """ Создаем временный файл для таблицы рабочих """
+    """Создаем временный файл для таблицы рабочих"""
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
     yield temp_file.name
     os.remove(temp_file.name)
+
 
 @pytest.fixture
 def temp_department_file():
@@ -16,10 +19,11 @@ def temp_department_file():
     yield temp_file.name
     os.remove(temp_file.name)
 
-#Пример, как используются фикстуры
+
+# Пример, как используются фикстуры
 @pytest.fixture
 def database(temp_employee_file, temp_department_file):
-    """ Данная фикстура задает БД и определяет таблицы. """
+    """Данная фикстура задает БД и определяет таблицы."""
     db = Database()
 
     # Используем временные файлы для тестирования файлового ввода-вывода в EmployeeTable и DepartmentTable
@@ -33,6 +37,7 @@ def database(temp_employee_file, temp_department_file):
 
     return db
 
+
 def test_insert_employee(database):
     database.insert("employees", "1 Alice 30 70000")
     database.insert("employees", "2 Bob 28 60000")
@@ -41,11 +46,23 @@ def test_insert_employee(database):
     employee_data = database.select("employees", 1, 2)
     print(employee_data)
     assert len(employee_data) == 2
-    assert employee_data[0] == {'id': '1', 'name': 'Alice', 'age': '30', 'salary': '70000'}
-    assert employee_data[1] == {'id': '2', 'name': 'Bob', 'age': '28', 'salary': '60000'}
+    assert employee_data[0] == {
+        "id": "1",
+        "name": "Alice",
+        "age": "30",
+        "salary": "70000",
+    }
+    assert employee_data[1] == {
+        "id": "2",
+        "name": "Bob",
+        "age": "28",
+        "salary": "60000",
+    }
+
 
 def test_insert_department(database):
     pass
+
 
 def test_join_employees_departments(database):
     pass
